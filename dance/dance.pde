@@ -2,6 +2,9 @@
 // TODO list
 // -remove grey borders that show when full screen is enabled or download bar closed
 // -try to let it adapt to browser resizes
+// -switch white/black background
+// -fill out more of screen for small figures
+// -remove sidebar bug when zooming
 
 // variables to tweak
 boolean isRandomParty = false;
@@ -100,16 +103,16 @@ void keyPressed() {
     isRandomParty = !isRandomParty;
     break;
   case '1':
-    dxs /= 2.0; 
-    dys /= 2.0;
+    if(dxs>=2.0) dxs /= 2.0; 
+    if(dys>=2.0) dys /= 2.0;
     break;
   case '2':
     dxs *= 2.0; 
     dys *= 2.0;
     break;
   case '3':
-    dx /= 1.5; 
-    dy /= 1.5; 
+    if(dx>=1.5) dx /= 1.5; 
+    if(dy>=1.5) dy /= 1.5; 
     break;
   case '4':
     dx *= 1.5; 
