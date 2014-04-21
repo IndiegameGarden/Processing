@@ -2,9 +2,6 @@
 // TODO list
 // -remove grey borders that show when full screen is enabled or download bar closed
 // -try to let it adapt to browser resizes
-// -if smaller figures plotted, try to fill them to entire screen
-// -for randomParty, try to fill more of the screen?
-// -use letter keys to select figures images
 
 // variables to tweak
 boolean isRandomParty = false;
@@ -154,10 +151,8 @@ void draw() {
 
   // random party mode
   if (isRandomParty) {
-    //x = dx * (sin(34.245*timeFraction) + width*0.05*timeFraction); //random(2, 50);
-    //y = dy * (cos(23.343*timeFraction) + width*0.05*timeFraction); //random(2, 25);
-    x = dx*random(-1, 60);
-    y = dy*random(-1, 30);
+    x = dx * round(random(0, width-280)/dx);
+    y = dy * round(random(-32, height-290)/dy);
   }
 
   // fade-out of previous image
