@@ -92,13 +92,14 @@ void mouseClicked() {
 
 void keyPressed() {
   switch(key) {
-  case 'f':    
+  case '5':    
     imagePeriod /= 2.0; 
     break;
-  case 's':    
+  case '6':    
     imagePeriod *= 2.0; 
     break;
   case 'r':
+  case 'R':
     isRandomParty = !isRandomParty;
     break;
   case '1':
@@ -120,10 +121,11 @@ void keyPressed() {
   default:
     imageTime= imagePeriod; // skip to next period      
     isRandomParty = false;
-    if ( key >= 'A' && key <= 'Z' ) {
-      imageIndex = key - 65;
+    if ( key >= 'A' && key <= 'Q' ) {
+      imageIndex = key - 'A';
     }
-    else if (key >='a' && key <= 'z') {
+    else if (key >='a' && key <= 'q') {
+      imageIndex = key - 'a';
     }
     break;
   }
