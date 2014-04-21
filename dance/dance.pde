@@ -2,7 +2,6 @@
 // TODO list
 // -remove grey borders that show when full screen is enabled or download bar closed
 // -try to let it adapt to browser resizes
-// -fill out more of screen for small figures
 // -remove sidebar bug when zooming
 
 // variables to tweak
@@ -16,7 +15,7 @@ float dotSizeMax = 0.7;         // relative size 0..1 of dots, can be also >1
 float bpm = 131.747;          // bpm for selected song
 float imagePeriod = 4.0 * (60.0/bpm);     // time period (s) that each image is shown
 int   imageIndex = 0;        // first image to show
-float BGCOL=1.0-0.90196;  // background color value 0-1
+float BGCOL=0;  // background color value 0-1
 
 // other vars
 ArrayList<PImage> aImages = new ArrayList<PImage>();
@@ -24,6 +23,7 @@ float hueOffset = random(0, 0.2);
 int   prevMillis=0;  // time keeping
 float imageTime = 0.0;  // time shown for current image
 float x, y;
+float totShapeHeight, totShapeWidth;
 
 void setup() {
   //goFullScreen();
@@ -63,8 +63,10 @@ void loadImages() {
 
 void renderImageDots(PImage im, float x, float y, float hueOffset, float timeFraction, float dotSizeScale) {
   color c; 
-  for (float xs = dxs/2; xs <= (im.width-dxs/2) ; xs+=dxs ) {
-    for (float ys = dys/2; ys < (im.height-dys/2) ; ys+=dys ) {
+  float xsmax = (im.width-dxs/2);
+  float ysmax = (im.height-dys/2);
+  for (float xs = dxs/2; xs <= xsmax ; xs+=dxs ) {
+    for (float ys = dys/2; ys < ysmax ; ys+=dys ) {
       c = im.get( (int)(round(xs)), (int)(round(ys)) );  // sample pixel
       if (brightness(c) < brightnessThresh) {  // if pixel dark...
         colorMode(HSB);
@@ -74,6 +76,8 @@ void renderImageDots(PImage im, float x, float y, float hueOffset, float timeFra
       }
     }
   }
+  totShapeWidth = xsmax/dxs*dx;
+  totShapeHeight = ysmax/dys*dy;
 }
 
 void renderImageFull(PImage im, float x, float y, float hueOffset, float timeFraction) {
@@ -135,6 +139,7 @@ void keyPressed() {
 }
 
 void draw() {
+  boolean isChangePos = false;
   //goFullScreen();  
 
   // time keeping
@@ -149,16 +154,15 @@ void draw() {
     if (imageIndex >= aImages.size() )
       imageIndex = 0;
     hueOffset = random(0, 0.8);      // pick new hue value
-    x = dx * round(random(0, width-280)/dx);
-    y = dy * round(random(-32, height-290)/dy);
+    isChangePos = true;
   }
 
   float timeFraction = imageTime/imagePeriod ;
 
   // random party mode
-  if (isRandomParty) {
-    x = dx * round(random(0, width-280)/dx);
-    y = dy * round(random(-32, height-290)/dy);
+  if (isRandomParty || isChangePos ) {
+    x = dx * round(random(0, width-totShapeWidth)/dx);
+    y = dy * round(random(-32, height-totShapeHeight)/dy);
   }
 
   // fade-out of previous image
