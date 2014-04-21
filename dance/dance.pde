@@ -29,8 +29,8 @@ void setup() {
   //goFullScreen();
   colorMode(RGB, 1);
   background(0.90196); // 230 = E6
-  size(displayWidth, displayHeight);
-  //size(window.outerWidth * 0.9999999, window.outerHeight * 0.9999999);  
+  //size(displayWidth, displayHeight);
+  size(window.innerWidth * 0.9999999, window.innerHeight * 0.9999999);  
   //size(900,600); 
   noStroke();
   loadImages();
