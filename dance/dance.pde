@@ -89,9 +89,10 @@ void renderImageFull(PImage im, float x, float y, float hueOffset, float timeFra
 
 void mouseClicked() {
   imageTime= imagePeriod; // skip to next period
-  isRandomParty = false;
+  if (mouseButton == LEFT)
+    isRandomParty = false;
   if (mouseButton == RIGHT)
-    isRandomParty = true;
+    isRandomParty = !isRandomParty;
 }
 
 void keyPressed() {
