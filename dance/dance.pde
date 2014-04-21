@@ -1,7 +1,5 @@
 
 // TODO list
-// -remove grey borders that show when full screen is enabled or download bar closed
-// -try to let it adapt to browser resizes
 // -remove sidebar bug when zooming
 
 // variables to tweak
@@ -24,13 +22,16 @@ int   prevMillis=0;  // time keeping
 float imageTime = 0.0;  // time shown for current image
 float x, y;
 float totShapeHeight, totShapeWidth;
+float lastInnerWidth, lastInnerHeight;
 
 void setup() {
   //goFullScreen();
   colorMode(RGB, 1);
   background(0.90196); // 230 = E6
   //size(displayWidth, displayHeight);
-  size(window.innerWidth * 0.9999999, window.innerHeight * 0.9999999);  
+  lastInnerWidth = window.innerWidth;
+  lastInnerHeight = window.innerHeight;
+  size(window.innerWidth * 0.999, window.innerHeight * 0.999);  
   //size(900,600); 
   noStroke();
   loadImages();
@@ -141,7 +142,15 @@ void keyPressed() {
 
 void draw() {
   boolean isChangePos = false;
-  //goFullScreen();  
+  //goFullScreen();
+  
+  // auto-resizing behaviour for browser
+  if (lastInnerWidth != window.innerWidth || lastInnerHeight != window.innerHeight) {
+    size(window.innerWidth * 0.999, window.innerHeight * 0.999);  
+    background(0);
+    lastInnerWidth = window.innerWidth;
+    lastInnerHeight = window.innerHeight;  
+  }  
 
   // time keeping
   float dt = ((float)(millis() - prevMillis))/1000;
