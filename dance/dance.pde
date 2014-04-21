@@ -1,4 +1,11 @@
 
+// TODO list
+// -remove grey borders that show when full screen is enabled or download bar closed
+// -try to let it adapt to browser resizes
+// -if smaller figures plotted, try to fill them to entire screen
+// -for randomParty, try to fill more of the screen?
+// -use letter keys to select figures images
+
 // variables to tweak
 boolean isRandomParty = false;
 float dxs = 2;  // sampling grid size x
@@ -7,7 +14,7 @@ float dx = 8;               // rendering grid size x
 float dy = 8;               // rendering grid size y
 float brightnessThresh = 0.33; // threshold for dark-pixel detection in sampling image
 float dotSizeMax = 0.7;         // relative size 0..1 of dots, can be also >1
-float bpm = 131.747;
+float bpm = 131.747;          // bpm for selected song
 float imagePeriod = 4.0 * (60.0/bpm);     // time period (s) that each image is shown
 int   imageIndex = 0;        // first image to show
 
@@ -19,11 +26,11 @@ float imageTime = 0.0;  // time shown for current image
 float x, y;
 
 void setup() {
-  goFullScreen();
+  //goFullScreen();
   colorMode(RGB, 1);
   background(0.90196); // 230 = E6
-  //size(displayWidth, displayHeight);
-  size(window.innerWidth * 0.9999999, window.innerHeight * 0.9999999);  
+  size(displayWidth, displayHeight);
+  //size(window.outerWidth * 0.9999999, window.outerHeight * 0.9999999);  
   //size(900,600); 
   noStroke();
   loadImages();
@@ -33,15 +40,17 @@ boolean sketchFullScreen() {
   return true;
 }
 
-function goFullScreen(){
-    var canvas = document.getElementById("dance");
-    if(canvas.requestFullScreen)
-        canvas.requestFullScreen();
-    else if(canvas.webkitRequestFullScreen)
-        canvas.webkitRequestFullScreen();
-    else if(canvas.mozRequestFullScreen)
-        canvas.mozRequestFullScreen();
+/*
+function goFullScreen() {
+  var canvas = document.getElementById("dance");
+  if (canvas.requestFullScreen)
+    canvas.requestFullScreen();
+  else if (canvas.webkitRequestFullScreen)
+    canvas.webkitRequestFullScreen();
+  else if (canvas.mozRequestFullScreen)
+    canvas.mozRequestFullScreen();
 }
+*/
 
 void loadImages() {
   PImage img;
@@ -93,18 +102,29 @@ void keyPressed() {
     isRandomParty = !isRandomParty;
     break;
   case '1':
-    dxs /= 2.0; dys /= 2.0;
+    dxs /= 2.0; 
+    dys /= 2.0;
     break;
   case '2':
-    dxs *= 2.0; dys *= 2.0;
+    dxs *= 2.0; 
+    dys *= 2.0;
     break;
   case '3':
-    dx /= 1.5; dy /= 1.5; break;
+    dx /= 1.5; 
+    dy /= 1.5; 
+    break;
   case '4':
-    dx *= 1.5; dy *= 1.5; break;
+    dx *= 1.5; 
+    dy *= 1.5; 
+    break;
   default:
     imageTime= imagePeriod; // skip to next period      
     isRandomParty = false;
+    if ( key >= 'A' && key <= 'Z' ) {
+      imageIndex = key - 65;
+    }
+    else if (key >='a' && key <= 'z') {
+    }
     break;
   }
 }
@@ -125,7 +145,7 @@ void draw() {
       imageIndex = 0;
     hueOffset = random(0, 0.8);      // pick new hue value
     x = dx * round(random(0, width-280)/dx);
-    y = dy * round(random(-32, height-290)/dy); 
+    y = dy * round(random(-32, height-290)/dy);
   }
 
   float timeFraction = imageTime/imagePeriod ;
