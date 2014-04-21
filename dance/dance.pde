@@ -2,7 +2,6 @@
 // TODO list
 // -remove grey borders that show when full screen is enabled or download bar closed
 // -try to let it adapt to browser resizes
-// -switch white/black background
 // -fill out more of screen for small figures
 // -remove sidebar bug when zooming
 
@@ -17,6 +16,7 @@ float dotSizeMax = 0.7;         // relative size 0..1 of dots, can be also >1
 float bpm = 131.747;          // bpm for selected song
 float imagePeriod = 4.0 * (60.0/bpm);     // time period (s) that each image is shown
 int   imageIndex = 0;        // first image to show
+float BGCOL=1.0-0.90196;  // background color value 0-1
 
 // other vars
 ArrayList<PImage> aImages = new ArrayList<PImage>();
@@ -118,6 +118,9 @@ void keyPressed() {
     dx *= 1.5; 
     dy *= 1.5; 
     break;
+  case '0':
+    BGCOL = 1-BGCOL;
+    break;    
   default:
     imageTime= imagePeriod; // skip to next period      
     isRandomParty = false;
@@ -160,7 +163,7 @@ void draw() {
 
   // fade-out of previous image
   colorMode(RGB);
-  fill(1, 1, 1, 0.044);
+  fill(BGCOL, BGCOL, BGCOL, 0.044);
   rect(0, 0, width, height);
 
   // render new image of dots
