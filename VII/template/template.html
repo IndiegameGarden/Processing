@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>VII</title>
+		<style type="text/css">
+	a img { 
+		border: 0px solid transparent;
+	}
+	body {
+	 margin: 10px; padding: 0px;
+	 background-color: #444;
+  }
+	canvas { 
+		display: block; 
+		outline: 0px; 
+		margin: 0px;
+    margin-left: auto; 
+    margin-right: auto; 
+	}
+	#content { 
+		margin: 0px; padding: 0px;
+		width: 100%; overflow: hidden;
+		background-color: #444;
+	}
+		</style>
+		<script src="processing.js" type="text/javascript"></script>
+		@@scripts@@
+	</head>
+	<body>
+		<div id="content">
+				<canvas id="@@id@@" data-processing-sources="@@sketch@@.pde"> 
+					<p>Your browser does not support the canvas tag.</p>
+				</canvas>
+				<noscript>
+					<p>JavaScript is required to view the contents of this page.</p>
+				</noscript>
+		</div>
+	</body>
+</html>

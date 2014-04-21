@@ -1,0 +1,8 @@
+bin
+obj
+*.bak
+Thumbs.db
+web-export
+*.exe
+application.windows32
+application.windows64
